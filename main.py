@@ -2,7 +2,6 @@ import anthropic
 import base64
 import json
 import sqlite3
-import threading
 import httpx
 import asyncio
 import io, os
@@ -499,10 +498,12 @@ async def auto_reply(client, message):
     reply = await generate_reply(message.from_user.id, message.text)
     await message.reply(reply)
 
-def run_aiogram():
-    asyncio.run(dp.start_polling(bot))
+async def main():
+    await asyncio.gather(
+        dp.start_polling(bot),
+        userbot.start(),
+    )
+    await asyncio.Event().wait()
 
-thread = threading.Thread(target=run_aiogram, daemon=True)
-thread.start()
-
-userbot.run()
+if __name__ == "__main__":
+    asyncio.run(main())
