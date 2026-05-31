@@ -374,7 +374,7 @@ class PaymentState(StatesGroup):
 @dp.callback_query(F.data == "payment")
 async def cmd_payment(callback: types.CallbackQuery, state: FSMContext):
     await callback.message.answer(
-        "💳 Номер карты: \n"
+        "💳 Номер карты: 9860020136357777\n"
         "После оплаты отправьте чек оплаты в чат с ботом."
     )
     await state.set_state(PaymentState.waiting_for_check)
